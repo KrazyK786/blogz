@@ -21,7 +21,10 @@ class BlogHandler(webapp2.RequestHandler):
         """
 
         # TODO - filter the query so that only posts by the given user
-        return None
+        
+        query = Post.all().filter("author", user)
+
+        return query.fetch(limit=limit, offset=offset)
 
     def get_user_by_name(self, username):
         """ Get a user object from the db, based on their username """
@@ -257,6 +260,7 @@ class SignupHandler(BlogHandler):
             self.redirect('/blog/newpost')
 
 class LoginHandler(BlogHandler):
+    """Handler to handle login"""
 
     # TODO - The login code here is mostly set up for you, but there isn't a template to log in
 
